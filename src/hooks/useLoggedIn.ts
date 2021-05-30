@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
 import DataStore, { DataStoreEvent } from "../DataStore";
 
-const useLoggedIn = (): boolean => {
-    const [loggedIn, setLoggedIn] = useState(false);
+const useLoggedIn = (onChange?: (loggedIn: boolean) => void) => {
+    const [loggedIn, setLoggedIn] = useState(DataStore.loggedIn);
 
     useEffect(() => {
-        DataStore.on(DataStoreEvent.LoggedInChanged, setLoggedIn);
-        setLoggedIn(DataStore.loggedIn);
-        return () => {
-            DataStore.off(DataStoreEvent.LoggedInChanged, setLoggedIn);
+        const onLoggedInChanged = (loggedIn: boolean) => {
+            setLoggedIn(loggedIn);
+            onChange?.(loggedIn);
         }
-    }, []);
+
+        DataStore.on(DataStoreEvent.LoggedInChanged, onLoggedInChanged);
+        return () => {
+            DataStore.off(DataStoreEvent.LoggedInChanged, onLoggedInChanged);
+        }
+    }, [onChange]);
 
     return loggedIn;
 }
+
 export default useLoggedIn;

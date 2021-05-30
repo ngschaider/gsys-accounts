@@ -1,7 +1,16 @@
-import React, { useState } from "react";
+
+import React from "react";
+const Dummy = () => {
+    return (
+        <h1>Dummy</h1>
+    );
+}
+export default Dummy;
+
+/*import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Form, Grid, Header, Image, Message, Segment } from "semantic-ui-react";
-import API, { RegisterData } from "../API";
+import API, { RegisterInput } from "../API";
 import DataStore from "../DataStore";
 import useForm from "../hooks/useForm";
 import { setCookie } from "../utils/cookie";
@@ -9,7 +18,7 @@ import { setCookie } from "../utils/cookie";
 const Register = () => {
     const [error, setError] = useState<string|null>(null);
 
-    const {onChange, onSubmit, values} = useForm<RegisterData>({
+    const {onChange, onSubmit, values} = useForm<RegisterInput>({
         firstName: "",
         lastName: "",
         email: "",
@@ -120,4 +129,4 @@ const Register = () => {
         </Grid>
     )
 }
-export default Register;
+export default Register;*/

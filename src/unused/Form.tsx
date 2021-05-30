@@ -1,46 +1,62 @@
-import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { Button, Form, Grid, Header, Image, Message, Segment } from "semantic-ui-react";
+
+import React from "react";
+const Dummy = () => {
+    return (
+        <h1>Dummy</h1>
+    );
+}
+export default Dummy;
+
+/*import React, { PropsWithChildren, useState } from "react";
+import { Link } from "react-router-dom";
+import { Button, Form as SemanticForm, Grid, Header, Image, Message, Segment } from "semantic-ui-react";
 import API, { LoginInput } from "../API";
 import DataStore from "../DataStore";
 import useForm from "../hooks/useForm";
 import { setCookie } from "../utils/cookie";
 import { getQueryParameter } from "../utils/query";
 
-const Login = () => {
-    const [redirect, setRedirect] = useState(false);
+type FormProps<T> = {
+    defaultValues: T
+    onChangeCb?: (values: T) => void,
+    onSubmitCb?: (values: T) => void,
+}
 
-    const {onChange, onSubmit, values} = useForm<LoginInput>({
-        usernameOrEmail: "",
-        password: "",
-    }, async (values) => {
+function Form<T> ({defaultValues, onChangeCb, onSubmitCb}: PropsWithChildren<FormProps<T>>) {
+    const [error, setError] = useState<string|null>(null);
+
+    const {onChange, onSubmit, values} = useForm<T>(defaultValues, async (values) => {
+        setError(null);
         const data = await API.login(values);
         
         if(data.type === "success" && data.token) {
             setCookie("GSYSAuthCookie", data.token);
 
             const origin = getQueryParameter("origin");
-            DataStore.loggedIn = true;
             if(origin) {
                 window.location.replace(origin);
             } else {
-                window.location.pathname = "/";
+                DataStore.loggedIn = true;
             }
+        } else {
+            setError(data.message || "Unbekannter Fehler");
         }
     });
 
     return (
         <Grid textAlign="center" style={{height: "100vh"}} verticalAlign="middle" >
             <Grid.Column style={{maxWidth: 450}}>
-                {redirect && (
-                    <Redirect to="/" />
-                )}
                 <Header as="h2" color="teal" textAlign="center">
                     <Image src="/logo.png" style={{width: "50%"}}/>
                 </Header>
-                <Form size="large" onSubmit={onSubmit}>
+                {error && (
+                    <Message error={true}>
+                        {error}
+                    </Message>
+                )}
+                <SemanticForm size="large" onSubmit={onSubmit}>
                     <Segment>
-                        <Form.Input 
+                        <SemanticForm.Input 
                             fluid 
                             icon="user" 
                             iconPosition="left" 
@@ -51,7 +67,7 @@ const Login = () => {
                             autoComplete="off"
                         />
 
-                        <Form.Input 
+                        <SemanticForm.Input 
                             fluid 
                             icon="lock" 
                             iconPosition="left" 
@@ -67,7 +83,7 @@ const Login = () => {
                             Einloggen
                         </Button>
                     </Segment>
-                </Form>
+                </SemanticForm>
                 <Message>
                     <Link to="/register">Neues Konto anlegen</Link>
                 </Message>
@@ -75,4 +91,4 @@ const Login = () => {
         </Grid>
     )
 }
-export default Login;
+export default Form;*/

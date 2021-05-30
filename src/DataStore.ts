@@ -1,32 +1,40 @@
 import EventEmitter from "events";
 
-const eventEmitter = new EventEmitter();
 
 export enum DataStoreEvent {
-    LoggedInChanged = "LoggedInChanged",
+    DataChanged = "DataChanged",
+    LoggedInChanged = "LoggedInChanged"
 };
 
-class DataStore {
-    private static data = {
-        loggedIn: document.cookie.includes("GSYSAuthCookie")
-    };
+export type DataStoreContent = {
+    loggedIn: boolean;
+}
 
-    public static get loggedIn() {
+class DataStore extends EventEmitter {
+
+    constructor() {
+        super();
+        this.setMaxListeners(100);
+    }
+
+    private data: DataStoreContent = {
+        loggedIn: document.cookie.includes("GSYSAuthCookie")
+    }
+
+    public get loggedIn() {
         return this.data.loggedIn;
     }
-    public static set loggedIn(value) {
+
+    public set loggedIn(value: boolean) {
+        const changed = this.loggedIn !== value;
         this.data.loggedIn = value;
-        eventEmitter.emit(DataStoreEvent.LoggedInChanged, this.data.loggedIn);
-    }
-
-    public static on(e: string, listener: (...args: any[]) => void) {
-        return eventEmitter.on(e, listener);
-    }
-
-    public static off(e: string, listener: (...args: any[]) => void) {
-        return eventEmitter.off(e, listener);
+        if(changed) {
+            this.emit(DataStoreEvent.LoggedInChanged, this.loggedIn);
+        }
     }
 
 }
 
-export default DataStore;
+const dataStore = new DataStore();
+
+export default dataStore;
