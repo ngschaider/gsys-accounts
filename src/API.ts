@@ -1,3 +1,5 @@
+import dataStore, { DataStoreEvent } from "./DataStore";
+import { deleteCookie } from "./utils/cookie";
 import { buildQueryString } from "./utils/query";
 
 type APIResponse = {
@@ -139,7 +141,12 @@ class API {
         if(res.status === 200 && res.body) {
             const json = await res.json();
             if(json.type === "error") {
-                this.error(json.code, json.message);
+                if(json.code === "INVALID_TOKEN") {
+                    deleteCookie("GSYSAuthCookie");
+                    dataStore.loggedIn = false;
+                } else {
+                    this.error(json.code, json.message);
+                }
             }
 
             return json;
