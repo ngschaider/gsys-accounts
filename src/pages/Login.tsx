@@ -20,10 +20,11 @@ const Login = () => {
             setCookie("GSYSAuthCookie", data.token);
 
             const origin = getQueryParameter("origin");
-            DataStore.loggedIn = true;
+            
             if(origin) {
                 window.location.replace(origin);
             } else {
+                DataStore.loggedIn = true;
                 window.location.pathname = "/";
             }
         }
