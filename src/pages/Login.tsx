@@ -25,7 +25,7 @@ const Login = () => {
                 window.location.replace(origin);
             } else {
                 DataStore.loggedIn = true;
-                window.location.pathname = "/";
+                setRedirect(true); // redirect to home page
             }
         }
     });

@@ -27,7 +27,7 @@ const UserUpdate = (props: RouteChildrenProps<{id: string}>) => {
         firstName: "",
         lastName: "",
         isAdmin: false,
-        changePasswordOnLogin: true,
+        resetPasswordOnLogin: true,
     }, onSubmitCb);
 
     useEffect(() => {
@@ -39,7 +39,7 @@ const UserUpdate = (props: RouteChildrenProps<{id: string}>) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 isAdmin: user.isAdmin,
-                changePasswordOnLogin: user.changePasswordOnLogin,
+                resetPasswordOnLogin: user.resetPasswordOnLogin,
             });
         }
     }, [users, id, setValues]);    
@@ -92,9 +92,9 @@ const UserUpdate = (props: RouteChildrenProps<{id: string}>) => {
                         autoComplete="off"
                     />
                     <Form.Checkbox
-                        name="changePasswordOnLogin"
+                        name="resetPasswordOnLogin"
                         onChange={onCheckboxChange}
-                        checked={values.changePasswordOnLogin}
+                        checked={values.resetPasswordOnLogin}
                         autoComplete="off"
                         label="Passwort muss geändert werden"
                     />

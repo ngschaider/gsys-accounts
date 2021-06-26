@@ -9,13 +9,14 @@ const useUsers = () => {
     useLoggedIn(() => invalidate());
 
     useEffect(() => {
-        if(!user && !loading) {
+        (async () => {
+            if(user || loading) return;
+
             setLoading(true);
-            API.me().then(res => {
-                setLoading(false);
-                setUser(res.user ?? null);
-            });
-        }
+            const res = await API.me();
+            setUser(res.user ?? null);
+            setLoading(false);
+        })();
     }, [user, loading]);
 
     const invalidate = () => {

@@ -18,12 +18,13 @@ const UserDeleteButton = ({id, onClick: onClickCb}: UserDeleteButtonProps) => {
     const onClick = () => {
         (async () => {
             if(loading) return;
-            API.deleteUser(id);
+            await API.deleteUser(id);
             if(user && user.id === id) {
                 DataStore.loggedIn = false;
                 deleteCookie("GSYSAuthCookie");
             }
             invalidate();
+            onClick?.();
         })();
     };
 

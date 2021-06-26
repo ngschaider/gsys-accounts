@@ -1,5 +1,5 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { CheckboxProps } from "semantic-ui-react";
+import { ChangeEvent, FormEvent, SyntheticEvent, useState } from "react";
+import { CheckboxProps, DropdownProps } from "semantic-ui-react";
 
 const useForm = <V extends Record<string,any>>(initialValues: V, onSubmitCb?: (values: V) => void, onChangeCb?: (values: V) => void) => {
     const [values, setValues] = useState<V>(initialValues);
@@ -8,12 +8,12 @@ const useForm = <V extends Record<string,any>>(initialValues: V, onSubmitCb?: (v
         setValues({
             ...values,
             [key]: value,
-        })
+        });
+        onChangeCb?.(values);
     }
 
     const onChange = (e: ChangeEvent<HTMLInputElement>|ChangeEvent<HTMLSelectElement>) => {
         setValue(e.target.name, e.target.value);
-        onChangeCb?.(values);
     }
 
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {

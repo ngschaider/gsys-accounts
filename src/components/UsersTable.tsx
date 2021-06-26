@@ -1,5 +1,6 @@
 import React from "react";
-import { Loader, Table } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { Button, Loader, Table } from "semantic-ui-react";
 import useUsers from "../hooks/useUsers";
 import UserDeleteButton from "./UserDeleteButton";
 import UserUpdateButton from "./UserUpdateButton";
@@ -30,6 +31,9 @@ const UsersTable = () => {
                                 <Table.Cell>{user.email}</Table.Cell>
                                 <Table.Cell>{user.isAdmin ? "Admin" : "Benutzer"}</Table.Cell>
                                 <Table.Cell>
+                                    <Link to={"/serviceUsers/" + user.id}>
+                                        <Button color="teal">Service Users</Button>
+                                    </Link>
                                     <UserDeleteButton id={user.id} />
                                     <UserUpdateButton id={user.id} />
                                 </Table.Cell>

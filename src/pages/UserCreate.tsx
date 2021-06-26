@@ -26,7 +26,7 @@ const UserCreate = () => {
         lastName: "",
         password: "",
         isAdmin: false,
-        changePasswordOnLogin: true,
+        resetPasswordOnLogin: true,
     }, onSubmitCb);
 
     return (
@@ -86,9 +86,9 @@ const UserCreate = () => {
                         autoComplete="off"
                     />
                     <Form.Checkbox
-                        name="changePasswordOnLogin"
+                        name="resetPasswordOnLogin"
                         onChange={onCheckboxChange}
-                        checked={values.changePasswordOnLogin}
+                        checked={values.resetPasswordOnLogin}
                         autoComplete="off"
                         label="Passwort muss geändert werden"
                     />
