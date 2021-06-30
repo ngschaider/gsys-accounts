@@ -10,5 +10,6 @@ WORKDIR /usr/local/apache2/htdocs
 COPY package.json ./
 COPY package-lock.json ./
 COPY --from=gsys-accounts-build /compile/build/ ./
+COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
 
 EXPOSE 80
